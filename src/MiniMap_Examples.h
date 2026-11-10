@@ -1,0 +1,178 @@
+#pragma once
+namespace MiniMapCommon {
+  inline constexpr int EXAMPLES_VERSION = 4;
+  struct TExampleFile { const char* name; const char* text; };
+  inline constexpr TExampleFile kExamples[] = {
+  { "readme.txt",
+    "MiniMap examples\r\n"
+    "================\r\n"
+    "\r\n"
+    "These files change nothing here. To use one:\r\n"
+    "  1. Copy it to MiniMap\\config\\ (every game)\r\n"
+    "     or to MiniMap\\mods\\<mod>\\ (one mod only, e.g. mods\\gothic).\r\n"
+    "  2. Edit it in Notepad. A line starting with # does nothing - remove\r\n"
+    "     the # to use it.\r\n"
+    "  3. Load a save. MiniMap.log shows every wrong line.\r\n"
+    "\r\n"
+    "Polish letters: save the file as ANSI (Windows-1250), not UTF-8.\r\n"
+    "All names of your game (items, characters, places, textures, texts):\r\n"
+    "the auto_*.txt files in MiniMap\\mods\\<mod>\\.\r\n"
+    "\r\n"
+    "FILES AND VALUES\r\n"
+    "----------------\r\n"
+    "01_colors.txt          [colors] KEY = R, G, B (0..255). Menu Map colours wins over this file.\r\n"
+    "02_icons.txt           [icons] KEY = path_in_icons.png[, tint | color R G B | nooutline]\r\n"
+    "                       Keys: item item_1h item_2h item_ranged item_armor item_potion item_plant\r\n"
+    "                       item_magic chest_open chest_key chest_lockpick chest_both chest_sealed\r\n"
+    "                       lever wheel switch_target shrine board forge ore treasure bed chair bench\r\n"
+    "                       throne fire exit trader corpse teleport alchemy kitchen workshop ladder\r\n"
+    "                       rune scroll demon interact\r\n"
+    "03_place_words.txt     [place_words] WORD = kind (at least 3 letters in WORD).\r\n"
+    "                       Kinds: shrine board forge ore treasure bed chair bench throne fire\r\n"
+    "                       alchemy kitchen workshop ladder rune scroll demon other none\r\n"
+    "04_texts.txt           [text], [text_pl], [text_en], [text_de], [text_cs]: KEY = text\r\n"
+    "                       [menu], [menu_pl], [menu_en], [menu_de], [menu_cs]: ITEM = text,\r\n"
+    "                       ITEM.info = bottom bar description (keep the same number of | signs).\r\n"
+    "05_terrain.txt         [terrain_colors] KIND = R, G, B\r\n"
+    "                       Kinds: water snow roof stonework building field path grass forest rock\r\n"
+    "                       plant swamp beach cave\r\n"
+    "                       [textures] TEXTURE_OR_PREFIX* = kind (above, plus terrain)\r\n"
+    "06_item_kinds.txt      [item_kinds] INSTANCE_OR_PREFIX* = kind\r\n"
+    "                       Kinds: melee_1h melee_2h ranged armor potion food magic docs gold other\r\n"
+    "07_traders.txt         [traders] NPC_INSTANCE = yes | no\r\n"
+    "08_hide.txt            [hide] INSTANCE_OR_PREFIX* = yes | no\r\n"
+    "09_names.txt           [names] INSTANCE_OR_MOBNAME = Display name\r\n"
+    "10_points.txt          [points] ID = WORLD, x, z, icon, Name\r\n"
+    "                       Icons: target treasure warning star point fight house cave herb quest\r\n"
+    "11_frames.txt          [frames] STYLE_MAP_PART = path_in_icons.png\r\n"
+    "                       STYLE: parchment iron gold | MAP: mini full | PART: corner edge ornament\r\n"
+    "12_creature_icons.txt  Copy to MiniMap\\icons\\mymod\\ (not to config), put pictures next to it.\r\n"
+    "                       [creatures] KEY = file.png, group[, keepcolors | nooutline | color R G B]\r\n"
+    "                       Groups: humans orcs animals beasts insects undead demons golems dragons\r\n"
+    "                       [items] KIND_OR_INSTANCE = file.png[, keepcolors | nooutline | color R G B]\r\n"
+    "icons\\marks\\marks.txt  [marks] 1..10 = file.png[, tint | color R G B | nooutline]\r\n"
+    "                       [names] 1..10 = Your own marker name (bar at the bottom of the big map)\r\n"
+  },
+  { "01_colors.txt",
+    "# MiniMap example - marker colors (how to use: readme.txt in this folder)\r\n"
+    "[colors]\r\n"
+    "enemy  = 255, 120, 0\r\n"
+    "trader = 255, 215, 0\r\n"
+    "# player         = 255, 236, 170\r\n"
+    "# friend         = 80, 210, 90\r\n"
+    "# neutral        = 225, 225, 220\r\n"
+    "# corpse         = 190, 160, 230\r\n"
+    "# item           = 70, 150, 245\r\n"
+    "# item_1h        = 60, 215, 220\r\n"
+    "# item_2h        = 250, 140, 30\r\n"
+    "# item_ranged    = 180, 110, 60\r\n"
+    "# item_armor     = 150, 160, 175\r\n"
+    "# item_potion    = 245, 100, 190\r\n"
+    "# item_plant     = 190, 235, 40\r\n"
+    "# item_magic     = 160, 90, 240\r\n"
+    "# chest_open     = 245, 200, 40\r\n"
+    "# chest_key      = 185, 20, 55\r\n"
+    "# chest_lockpick = 35, 75, 235\r\n"
+    "# chest_both     = 150, 40, 170\r\n"
+    "# chest_sealed   = 85, 85, 90\r\n"
+    "# switch         = 240, 0, 240\r\n"
+    "# switch_target  = 255, 130, 255\r\n"
+    "# shrine         = 150, 215, 255\r\n"
+    "# board          = 0, 165, 125\r\n"
+    "# forge          = 255, 85, 0\r\n"
+    "# ore            = 120, 255, 200\r\n"
+    "# other_place    = 200, 190, 160\r\n"
+    "# alchemy        = 30, 235, 30\r\n"
+    "# kitchen        = 225, 225, 105\r\n"
+    "# workshop       = 135, 75, 0\r\n"
+    "# treasure       = 255, 250, 0\r\n"
+    "# exit           = 0, 205, 255\r\n"
+    "# rune           = 0, 120, 255\r\n"
+    "# scroll         = 150, 150, 0\r\n"
+    "# demon          = 170, 0, 0\r\n"
+  },
+  { "02_icons.txt",
+    "# MiniMap example - your own pictures for map markers (how to use: readme.txt in this folder)\r\n"
+    "[icons]\r\n"
+    "forge = default\\textured\\item_gold.png, tint\r\n"
+    "bed   = default\\textured\\item_melee_1h.png, color 80 200 255\r\n"
+    "# chest_open = mine.png\r\n"
+    "# shrine     = mine.png, nooutline\r\n"
+  },
+  { "03_place_words.txt",
+    "# MiniMap example - what a place on the map is (how to use: readme.txt in this folder)\r\n"
+    "[place_words]\r\n"
+    "ANVIL = forge\r\n"
+    "# MOD_ALTAR = shrine\r\n"
+    "# MYMOD_PILE = treasure\r\n"
+  },
+  { "04_texts.txt",
+    "# MiniMap example - texts of the plugin and of the menu (how to use: readme.txt in this folder)\r\n"
+    "[text]\r\n"
+    "SEARCH_PREFIX = Find:\r\n"
+    "# [text_pl]\r\n"
+    "# SEARCH_PREFIX = Szukaj:\r\n"
+    "# [menu_en]\r\n"
+    "# MM_LOG = Write log\r\n"
+    "# MM_LOG.info = MiniMap.log in the MiniMap folder.\r\n"
+  },
+  { "05_terrain.txt",
+    "# MiniMap example - colors of the ground and textures (how to use: readme.txt in this folder)\r\n"
+    "[terrain_colors]\r\n"
+    "water = 30, 70, 160\r\n"
+    "# grass = 90, 140, 60\r\n"
+    "[textures]\r\n"
+    "# MYMOD_ROAD* = path\r\n"
+  },
+  { "06_item_kinds.txt",
+    "# MiniMap example - kind of an item (search, color, icon) (how to use: readme.txt in this folder)\r\n"
+    "[item_kinds]\r\n"
+    "ITFO_BEER = potion\r\n"
+    "ITFOBEER  = potion\r\n"
+    "# ITMI_MODORE = gold\r\n"
+    "# ITMI_RUNE_* = magic\r\n"
+  },
+  { "07_traders.txt",
+    "# MiniMap example - who is a trader (how to use: readme.txt in this folder)\r\n"
+    "[traders]\r\n"
+    "VLK_407_HAKON = no\r\n"
+    "# MY_MERCHANT = yes\r\n"
+  },
+  { "08_hide.txt",
+    "# MiniMap example - hide characters and items (how to use: readme.txt in this folder)\r\n"
+    "[hide]\r\n"
+    "MEATBUG = yes\r\n"
+    "# ITMI_TARGET_* = yes\r\n"
+  },
+  { "09_names.txt",
+    "# MiniMap example - your own names in the tooltip and search (how to use: readme.txt in this folder)\r\n"
+    "[names]\r\n"
+    "ITFO_APPLE      = Red apple\r\n"
+    "ITFOAPPLE       = Red apple\r\n"
+    "MOBNAME_ANVIL   = Old anvil\r\n"
+    "# VLK_407_HAKON = Hakon the merchant\r\n"
+  },
+  { "10_points.txt",
+    "# MiniMap example - fixed markers on the map (how to use: readme.txt in this folder)\r\n"
+    "[points]\r\n"
+    "DEMO_STAR_G2 = NEWWORLD, 0, 0, star, MiniMap example point\r\n"
+    "DEMO_STAR_G1 = WORLD, 0, 0, star, MiniMap example point\r\n"
+  },
+  { "11_frames.txt",
+    "# MiniMap example - your own pictures for map frames (how to use: readme.txt in this folder)\r\n"
+    "[frames]\r\n"
+    "# gold_mini_corner = mymod\\corner.png\r\n"
+    "# gold_mini_edge   = mymod\\edge.png\r\n"
+    "# gold_full_corner = mymod\\corner_big.png\r\n"
+  },
+  { "12_creature_icons.txt",
+    "# MiniMap example - pictures for characters and creatures (how to use: readme.txt in this folder)\r\n"
+    "[creatures]\r\n"
+    "SHEEP_BODY = -, beasts\r\n"
+    "# SHEEP_BODY = mysheep.png, animals\r\n"
+    "# [items]\r\n"
+    "# gold = my_coin.png\r\n"
+  },
+  };
+  inline constexpr int kExamplesN = (int)( sizeof( kExamples ) / sizeof( kExamples[0] ) );
+}
